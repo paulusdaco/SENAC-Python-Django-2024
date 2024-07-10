@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Criar Evento</title>
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex py-4">
+    <h1>Criar um novo Evento</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ _(form.as_p) }}
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</div>
+{% endblock %}

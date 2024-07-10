@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Mostrar Evento</title>
+{% endblock %}
+
+{% block content %}
+<div class="container text-lg-center py-3">
+    <h1>{{ event.name }}</h1>
+</div>
+<img src="{{ event.image.url }}" alt="{{ event.name }}" class="img-fluid rounded w-50">
+<p class="pt-1">Descrição: {{ event.description }}</p>
+<p>Data: {{ event.date }}</p>
+<p>Horário: {{ event.time }}</p>
+<p>Local: {{ event.latitude }}, {{ event.longitude }}</p>
+<div class="container text-lg-center py-3">
+    <div id="map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+        var map = L.map('map').setView([{{ event.latitude }}, {{ event.longitude }}], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([{{ event.latitude }}, {{ event.longitude }}]).addTo(map)
+            .bindPopup('<b>{{ event.name }}</b><br>{{ event.date }} - {{ event.time }}')
+            .openPopup();
+
+
+
+</script>
+
+{% if user == event.created_by %}
+<div class="container row p-1 m-2">
+    <div class="col text-end">
+        <a href="{% url 'event_edit' event.pk %}" class="btn btn-primary">Editar</a>
+    </div>
+    <div class="col text-start">
+        <a href="{% url 'event_delete' event.pk %}" class="btn btn-danger">Excluir</a>
+    </div>
+</div>
+{% endif %}
+
+
+{% endblock %}

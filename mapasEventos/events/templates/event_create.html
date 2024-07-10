@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Criar Evento</title>
+{% endblock %}
+
+{% block content %}
+<div class="container text-lg-center py-3">
+    <h2>Criar Evento</h2>
+</div>
+<div class="p-2 m-1">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Criar Evento</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+
+
+
